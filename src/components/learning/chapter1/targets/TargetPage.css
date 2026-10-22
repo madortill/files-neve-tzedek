@@ -1,0 +1,243 @@
+.target-page {
+  --target-width: min(80%, 65rem);
+  --folder-height: 23%;
+
+  position: relative;
+  box-sizing: border-box;
+
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+
+  color: #30295d;
+  direction: rtl;
+}
+
+/* אזור התוכן מעל התיקייה */
+.target-page-main {
+  position: absolute;
+  inset: 0 0 var(--folder-height);
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: clamp(1rem, 4dvh, 2.5rem);
+
+  padding:
+    max(5.5rem, 15dvh)
+    0
+    1.5rem;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+}
+
+.target-page-title {
+  box-sizing: border-box;
+  flex-shrink: 0;
+
+  width: var(--target-width);
+  margin: 0;
+  padding: 0.5rem 1.25rem;
+
+  border-radius: 1.5rem;
+  background: #f4f8ff;
+
+  font-family: "lin-bold", sans-serif;
+  font-size: clamp(1.25rem, 2.2vw, 2rem);
+  font-weight: normal;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.target-page-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(0.75rem, 2vw, 2rem);
+
+  flex-shrink: 0;
+  width: var(--target-width);
+  padding-bottom: 0.25rem;
+}
+
+.target-card {
+  min-width: 0;
+  overflow: hidden;
+
+  border-radius: 1rem;
+  background: #f4f8ff;
+  box-shadow: 0 0.125rem 0.125rem rgb(34 27 74 / 35%);
+}
+
+.target-card-heading {
+  margin: 0;
+}
+
+.target-card-trigger {
+  appearance: none;
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr) 1.25rem;
+  align-items: center;
+  gap: 0.625rem;
+
+  width: 100%;
+  min-height: 4.5rem;
+  margin: 0;
+  height: 5.5rem;
+  padding: 0.75rem;
+
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.target-card-label {
+  font-family: "ploni-bold", sans-serif;
+  font-size: clamp(1.225rem, 1.9vw, 1.8rem);
+  font-weight: normal;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.target-card-icon {
+  display: block;
+  width: 1.75rem;
+  height: 1.75rem;
+  object-fit: contain;
+  transform: rotate(180deg);
+}
+
+.target-card-chevron {
+  display: block;
+  width: 1.25rem;
+  height: 1.25rem;
+
+  transition: transform 300ms ease;
+}
+
+.target-card-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+.target-card-trigger:focus-visible {
+  outline: 0.1875rem solid #28acff;
+  outline-offset: -0.25rem;
+  border-radius: 1rem;
+}
+
+/* אנימציית הפתיחה והסגירה הקיימת */
+.target-card-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+
+  transition:
+    grid-template-rows 350ms ease,
+    opacity 250ms ease;
+}
+
+.target-card-panel.is-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.target-card-panel-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.target-card-panel-content {
+  box-sizing: border-box;
+
+  /* אותו גובה לכל אזורי הטקסט, גם כשהטקסט קצר */
+  height: clamp(6rem, 18dvh, 10rem);
+  padding: 0.5rem 1.25rem 1.75rem;
+
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.target-card-panel p {
+  margin: 0;
+
+  font-family: "Ploni", sans-serif;
+  font-size: clamp(1.2rem, 1.65vw, 1.45rem);
+  line-height: 1.5;
+  text-align: center;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+/* התיקייה מתחילה בחלק התחתון ונחתכת בגבול המסך */
+.target-page-folder {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+
+  width: var(--target-width);
+  height: var(--folder-height);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+
+  transform: translateX(-50%);
+  pointer-events: none;
+  user-select: none;
+}
+
+.target-page-folder img {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+}
+
+/* במסך צר הכרטיסיות מוצגות אחת מתחת לשנייה */
+@media (max-width: 40rem) {
+  .target-page {
+    --target-width: 88%;
+    --folder-height: 20%;
+  }
+
+  .target-page-main {
+    gap: 1rem;
+    padding-top: 5.5rem;
+
+    /* מונע חפיפה לחצים גם במסך נמוך */
+    bottom: max(var(--folder-height), var(--navigation-space));
+  }
+
+  .target-page-cards {
+    grid-template-columns: 1fr;
+    gap: 0.875rem;
+  }
+}
+
+/* במסך נמוך מקטינים את הרווח העליון */
+@media (max-height: 32rem) {
+  .target-page-main {
+    padding-top: 5rem;
+    gap: 1rem;
+    bottom: max(var(--folder-height), var(--navigation-space));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .target-card-chevron,
+  .target-card-panel {
+    transition: none;
+  }
+}

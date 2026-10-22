@@ -1,0 +1,161 @@
+.training-form {
+  width: 100%;
+  font-family: inherit;
+}
+
+/* הטופס הקטן מוצג בשלמותו */
+.training-form-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+
+  max-width: 100%;
+  margin-inline: auto;
+  padding: 0;
+
+  background: transparent;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  cursor: zoom-in;
+}
+
+.training-form-preview img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 65dvh;
+  object-fit: contain;
+
+  box-shadow: 0 0.3rem 1rem rgb(0 0 0 / 18%);
+}
+
+.training-form-preview:focus-visible {
+  outline: 0.2rem solid #275d9b;
+  outline-offset: 0.3rem;
+}
+
+/* חלון הטופס */
+.training-form-dialog {
+  box-sizing: border-box;
+  width: 95vw;
+  max-width: 95vw;
+  height: 92dvh;
+  max-height: 92dvh;
+  margin: auto;
+  padding: 0;
+
+  border: 0;
+  border-radius: 0.7rem;
+  background: #e8e8e8;
+  color: #222;
+  font-family: inherit;
+  overflow: hidden;
+}
+
+.training-form-dialog::backdrop {
+  background: rgb(0 0 0 / 65%);
+}
+
+.training-form-dialog-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+/* הכותרת נשארת מחוץ לאזור הגלילה */
+.training-form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  gap: 1rem;
+
+  padding: 0.6rem 1rem;
+  background: white;
+  border-bottom: 1px solid #ccc;
+}
+
+.training-form-header button {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+
+  border: 0;
+  border-radius: 0.4rem;
+  background: #eee;
+  color: #222;
+  font: inherit;
+  cursor: pointer;
+}
+
+.training-form-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 1rem;
+}
+
+/* התמונה והשדות משתמשים באותו אזור */
+.training-form-page {
+  position: relative;
+  container-type: inline-size;
+
+  width: 100%;
+  max-width: 1750px;
+  margin-inline: auto;
+
+  background: white;
+}
+
+.training-form-image {
+  display: block;
+  width: 100%;
+  height: auto;
+
+  user-select: none;
+  pointer-events: none;
+}
+
+/* כל המיקומים מגיעים מקובץ ההגדרות */
+.training-form-field {
+  position: absolute;
+  box-sizing: border-box;
+
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0 0.15em;
+
+  font-family: inherit;
+  font-size: 2cqw;
+  font-weight: normal;
+  line-height: 1.1;
+  text-align: center;
+
+  color: #142a44;
+  background: rgb(232 242 255 / 45%);
+  border: 1px solid #7f9bbc;
+  border-radius: 0.15rem;
+}
+
+.training-form-field:focus {
+  outline: 2px solid #275d9b;
+  outline-offset: -2px;
+  background: #fff;
+}
+
+textarea.training-form-field {
+  resize: none;
+  text-align: right;
+}
+
+input[type="checkbox"].training-form-field {
+  padding: 0;
+  accent-color: #275d9b;
+}

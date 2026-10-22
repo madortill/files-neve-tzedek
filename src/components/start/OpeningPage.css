@@ -1,0 +1,255 @@
+.opening-page {
+  position: relative;
+  isolation: isolate;
+
+  display: grid;
+  place-items: end center;
+
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+
+  background: #000357;
+}
+
+/* רקע */
+.opening-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  pointer-events: none;
+}
+
+/* שכבת הצבע לא משפיעה על הדפים ועל הכפתורים */
+.opening-tint {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+background: linear-gradient(180deg, rgba(44, 49, 183, 0.60) 0%, rgba(0, 3, 87, 0.60) 100%);
+  opacity: 0.99;
+    backdrop-filter: blur(5px);
+
+  pointer-events: none;
+}
+
+/* במה ביחס העיצוב 1440×1024, מוגבלת גם לפי גובה המסך */
+.opening-stage {
+  position: relative;
+  z-index: 2;
+
+  width: min(100%, 140.625dvh);
+  aspect-ratio: 1440 / 1024;
+}
+
+/* ערימת הדפים, כולל האטב אם הוא חלק מהקובץ */
+.opening-papers {
+  position: absolute;
+  top: 9%;
+  left: 8%;
+  width: 84%;
+  height: auto;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+.opening-sticker {
+  position: absolute;
+  width: 14.5%;
+  height: auto;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+.opening-sticker-till {
+  top: 19%;
+  left: 69.5%;
+}
+
+.opening-sticker-bahad {
+  top: 59%;
+  left: 17.8%;
+}
+
+.opening-title {
+  position: absolute;
+  top: 28%;
+  left: 28%;
+  width: 44%;
+  margin: 0;
+}
+
+.opening-title img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* איפוס משותף לכפתורים שמשתמשים בגרפיקה */
+.opening-image-button {
+  display: grid;
+  place-items: center;
+
+  min-height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.opening-image-button img {
+  display: block;
+  width: 100%;
+  height: auto;
+
+}
+.opening-image-button:hover{
+}
+
+.opening-image-button:focus-visible {
+  outline: 0.1875rem solid #ffffff;
+  outline-offset: 0.3rem;
+  border-radius: 2rem;
+}
+
+.opening-start {
+  position: absolute;
+  top: 70.5%;
+  left: 50%;
+  width: 16%;
+  transform: translateX(-50%);
+}
+
+.opening-about {
+  position: absolute;
+  z-index: 3;
+
+  top: max(3rem, env(safe-area-inset-top));
+  right: max(3rem, env(safe-area-inset-right));
+  width: clamp(5rem, 10.5vw, 9rem);
+}
+
+/* חלונית אודות — הדיאלוג עצמו משמש כאזור לחיצה מחוץ לכרטיס */
+.opening-about-dialog {
+  position: fixed;
+  inset: 0;
+
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 1rem;
+
+  border: 0;
+  background: transparent;
+  overflow-y: auto;
+}
+
+.opening-about-dialog[open] {
+  display: flex;
+}
+
+.opening-about-dialog::backdrop {
+  background: rgb(9 12 55 / 65%);
+}
+
+.opening-about-card {
+  position: relative;
+  box-sizing: border-box;
+  flex-shrink: 0;
+
+  width: min(100%, 21rem);
+  margin: auto;
+  padding: 2.75rem 1.25rem 1.5rem;
+
+  border: 0.125rem solid #3935ad;
+  border-radius: 1.25rem;
+  background: #ffffff;
+  color: #3935ad;
+
+  font-family: "Ploni", sans-serif;
+  font-size: 1.25rem;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.opening-about-card h2,
+.opening-about-card h3 {
+  margin: 0;
+  font: inherit;
+  font-weight: 700;
+}
+
+.opening-about-card p {
+  margin: 0.25rem 0 0;
+  white-space: pre-line;
+}
+
+.opening-about-character {
+  display: block;
+  width: 65%;
+  max-height: 13rem;
+  margin: 1rem auto 0.75rem;
+  object-fit: contain;
+}
+
+.opening-about-detail {
+  margin-top: 0.5rem;
+}
+
+.opening-about-card .opening-about-handwriting {
+  margin-top: 1rem;
+
+  font-family: "Eden", cursive;
+  font-size: 1.5rem;
+  line-height: 1.55;
+  color: #171717;
+}
+
+.opening-about-close {
+  position: absolute;
+  top: 0.25rem;
+  left: 0.25rem;
+
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #3935ad;
+
+  font: inherit;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.opening-about-close:focus-visible {
+  outline: 0.125rem solid #3935ad;
+  outline-offset: -0.25rem;
+}
+
+/* במסך עומד מרכזים את הקומפוזיציה ומגדילים את כפתור ההתחלה */
+@media (orientation: portrait) {
+  .opening-page {
+    place-items: center;
+  }
+
+  .opening-start {
+    width: 23%;
+  }
+}
