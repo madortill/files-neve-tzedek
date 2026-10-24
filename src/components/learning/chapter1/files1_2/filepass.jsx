@@ -1,7 +1,7 @@
 import { useState } from "react";
 import FormViewer from "../../FormViewer.jsx";
 import { passForm } from "../../../../data/forms/PassForm1.js";
-import { passApproveForm } from "../../../../assets/images/file-pass-approve.svg";
+// import { passApproveForm } from "../../../../assets/images/file-pass-approve.svg";
 
 export default function PassScreen() {
   const [answers, setAnswers] = useState({});
