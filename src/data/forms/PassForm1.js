@@ -1,6 +1,6 @@
 
 
-import filePass from "../../assets/images/files/file-pass-approve.svg"
+import filePass from "./../../assets/images/files/file-pass-approve.svg"
 
 
 

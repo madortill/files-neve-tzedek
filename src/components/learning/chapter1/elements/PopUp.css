@@ -1,0 +1,259 @@
+
+.popup-overlay,
+.popup-overlay * {
+  box-sizing: border-box;
+}
+
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: clamp(12px, 3vh, 24px) clamp(16px, 4vw, 24px);
+
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.popup-content {
+  position: relative;
+
+  width: 100%;
+  max-width: 526px;
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
+
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  padding: clamp(20px, 4vh, 28px) clamp(18px, 5vw, 38px) 26px;
+
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 35px rgba(0, 0, 0, 0.2);
+
+  color: #111;
+  direction: rtl;
+}
+
+.popup-title {
+  flex-shrink: 0;
+  margin: 0 0 12px;
+
+  color: #e34b46;
+  font-size: clamp(26px, 6vw, 32px);
+  font-weight: 700;
+  font-family: "Eden";
+  line-height: 1.4;
+  text-align: center;
+}
+
+.popup-instructions {
+  margin: 0;
+  padding: 0 20px 0 0;
+
+  font-size: clamp(16px, 2.6vw, 22px);
+  line-height: 1.9;
+  text-align: right;
+}
+
+.popup-instructions li {
+  padding-right: 1px;
+}
+
+.popup-highlight-area {
+  position: relative;
+  flex-shrink: 0;
+
+  margin-top: 10px;
+  padding: 0 0 0 5px;
+}
+
+.popup-highlight-paragraph {
+  margin: 0;
+  padding: 0;
+
+  font-size: clamp(16px, 2.6vw, 22px);
+  line-height: 1.9;
+  text-align: center;
+}
+
+.popup-highlight-text {
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+
+  background-image: linear-gradient(
+    to left,
+    #ffffa8,
+    #ffffa8
+  );
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: 0% 100%;
+
+  transition: background-size 1.6s ease;
+}
+
+.popup-highlight-text.is-highlighted {
+  background-size: 100% 100%;
+}
+
+.popup-marker-button {
+  position: absolute;
+  z-index: 2;
+  top: -18px;
+  right: -14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 42px;
+  padding: 3px;
+
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+
+  cursor: pointer;
+  touch-action: manipulation;
+
+  transition: transform 0.2s ease;
+}
+
+.popup-marker {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.popup-marker-button:hover {
+  transform: rotate(-10deg) scale(1.08);
+}
+
+.popup-marker-button:focus-visible,
+.popup-continue:focus-visible {
+  outline: 2px solid #e34b46;
+  outline-offset: 3px;
+}
+
+.popup-continue {
+  align-self: center;
+  flex-shrink: 0;
+
+  min-width: 81px;
+  min-height: 30px;
+  margin-top: clamp(28px, 5vh, 40px);
+  padding: 3px 17px;
+
+  border: none;
+  border-radius: 20px;
+  background: #d94b48;
+  color: #fff;
+
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.5;
+
+  cursor: pointer;
+  touch-action: manipulation;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.popup-continue:hover {
+  background: #bd3936;
+  transform: scale(1.04);
+}
+
+.popup-continue:active {
+  transform: scale(0.97);
+}
+
+/* מסכים צרים */
+@media (max-width: 480px) {
+  .popup-overlay {
+    padding: 12px;
+  }
+
+  .popup-content {
+    max-height: calc(100vh - 24px);
+    max-height: calc(100dvh - 24px);
+    padding: 22px 20px 24px;
+    border-radius: 14px;
+  }
+
+  .popup-instructions {
+    padding-right: 18px;
+  }
+
+  .popup-highlight-area {
+    margin-top: 12px;
+  }
+
+  .popup-continue {
+    margin-top: 28px;
+  }
+}
+
+/* מסכים נמוכים, כולל מחשבים ניידים במצב חלון */
+@media (max-height: 500px) {
+  .popup-overlay {
+    align-items: flex-start;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .popup-content {
+    max-height: calc(100vh - 16px);
+    max-height: calc(100dvh - 16px);
+    padding-top: 14px;
+    padding-bottom: 16px;
+  }
+
+  .popup-title {
+    margin-bottom: 6px;
+  }
+
+  .popup-instructions {
+    line-height: 1.65;
+  }
+
+  .popup-highlight-area {
+    margin-top: 6px;
+  }
+
+  .popup-highlight-paragraph {
+    line-height: 1.65;
+  }
+
+  .popup-continue {
+    margin-top: 16px;
+  }
+}
+
+/* כיבוד הגדרת הפחתת תנועה במכשיר */
+@media (prefers-reduced-motion: reduce) {
+  .popup-highlight-text,
+  .popup-marker-button,
+  .popup-continue {
+    transition: none;
+  }
+}

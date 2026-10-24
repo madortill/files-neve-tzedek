@@ -1,3 +1,4 @@
+
 .opening-page {
   position: relative;
   isolation: isolate;
@@ -12,7 +13,10 @@
   background: #000357;
 }
 
-/* רקע */
+/* =========================
+   רקע
+========================= */
+
 .opening-background {
   position: absolute;
   inset: 0;
@@ -25,20 +29,27 @@
   pointer-events: none;
 }
 
-/* שכבת הצבע לא משפיעה על הדפים ועל הכפתורים */
 .opening-tint {
   position: absolute;
   inset: 0;
   z-index: 1;
 
-background: linear-gradient(180deg, rgba(44, 49, 183, 0.60) 0%, rgba(0, 3, 87, 0.60) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(44, 49, 183, 0.6) 0%,
+    rgba(0, 3, 87, 0.6) 100%
+  );
+
   opacity: 0.99;
-    backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
 
   pointer-events: none;
 }
 
-/* במה ביחס העיצוב 1440×1024, מוגבלת גם לפי גובה המסך */
+/* =========================
+   במה ודפים
+========================= */
+
 .opening-stage {
   position: relative;
   z-index: 2;
@@ -47,11 +58,11 @@ background: linear-gradient(180deg, rgba(44, 49, 183, 0.60) 0%, rgba(0, 3, 87, 0
   aspect-ratio: 1440 / 1024;
 }
 
-/* ערימת הדפים, כולל האטב אם הוא חלק מהקובץ */
 .opening-papers {
   position: absolute;
   top: 9%;
   left: 8%;
+
   width: 84%;
   height: auto;
 
@@ -59,40 +70,96 @@ background: linear-gradient(180deg, rgba(44, 49, 183, 0.60) 0%, rgba(0, 3, 87, 0
   user-select: none;
 }
 
+/* =========================
+   סטיקרים — כניסה בתחילת העמוד
+========================= */
+
 .opening-sticker {
   position: absolute;
+
   width: 14.5%;
   height: auto;
 
   pointer-events: none;
   user-select: none;
+
+  will-change: transform, opacity;
 }
 
 .opening-sticker-till {
   top: 19%;
   left: 69.5%;
+
+  animation: stickerTillEnter 850ms
+    cubic-bezier(0.2, 0.75, 0.25, 1) 150ms both;
 }
 
 .opening-sticker-bahad {
   top: 59%;
   left: 17.8%;
+
+  animation: stickerBahadEnter 850ms
+    cubic-bezier(0.2, 0.75, 0.25, 1) 350ms both;
 }
+
+@keyframes stickerTillEnter {
+  from {
+    opacity: 0;
+    transform: translate(55px, -12px) rotate(7deg) scale(0.92);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translate(-4px, 2px) rotate(-1deg) scale(1.01);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0) scale(1);
+  }
+}
+
+@keyframes stickerBahadEnter {
+  from {
+    opacity: 0;
+    transform: translate(-55px, 15px) rotate(-7deg) scale(0.92);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translate(4px, -2px) rotate(1deg) scale(1.01);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0) scale(1);
+  }
+}
+
+/* =========================
+   כותרת
+========================= */
 
 .opening-title {
   position: absolute;
   top: 28%;
   left: 28%;
+
   width: 44%;
   margin: 0;
 }
 
 .opening-title img {
   display: block;
+
   width: 100%;
   height: auto;
 }
 
-/* איפוס משותף לכפתורים שמשתמשים בגרפיקה */
+/* =========================
+   בסיס הכפתורים
+========================= */
+
 .opening-image-button {
   display: grid;
   place-items: center;
@@ -100,6 +167,7 @@ background: linear-gradient(180deg, rgba(44, 49, 183, 0.60) 0%, rgba(0, 3, 87, 0
   min-height: 2.75rem;
   padding: 0;
   border: 0;
+
   background: transparent;
 
   cursor: pointer;
@@ -109,11 +177,9 @@ background: linear-gradient(180deg, rgba(44, 49, 183, 0.60) 0%, rgba(0, 3, 87, 0
 
 .opening-image-button img {
   display: block;
+
   width: 100%;
   height: auto;
-
-}
-.opening-image-button:hover{
 }
 
 .opening-image-button:focus-visible {
@@ -122,72 +188,214 @@ background: linear-gradient(180deg, rgba(44, 49, 183, 0.60) 0%, rgba(0, 3, 87, 0
   border-radius: 2rem;
 }
 
+/* =========================
+   כפתור בואו נתחיל
+   הגרפיקה, הצבע והצל נמצאים ב-SVG
+========================= */
+
 .opening-start {
   position: absolute;
   top: 70.5%;
   left: 50%;
+
   width: 16%;
+
   transform: translateX(-50%);
+  transition: filter 180ms ease;
 }
+
+/* אפקט עדין במעבר עכבר — בלי להוסיף צל כפול */
+
+.opening-start:hover {
+  filter: brightness(1.06);
+}
+
+.opening-start:active {
+  filter: brightness(0.96);
+}
+
+/* מכסים רק את החץ הקיים בתוך התמונה */
+
+.opening-start-arrow-cover {
+  position: absolute;
+
+  left: 9%;
+  top: 25%;
+
+  width: 12%;
+  height: 50%;
+
+  background: #028bff;
+
+  pointer-events: none;
+}
+
+/* החץ החדש — זז ימינה ושמאלה */
+
+.opening-start-arrow {
+  position: absolute;
+
+  left: 10.5%;
+  top: 48%;
+
+  width: 7.5%;
+  height: 3px;
+
+  border-radius: 999px;
+  background: #ffffff;
+
+  transform: translateY(-50%);
+  transform-origin: center;
+
+  animation: startArrowMove 950ms ease-in-out infinite;
+
+  pointer-events: none;
+}
+
+.opening-start-arrow::before,
+.opening-start-arrow::after {
+  content: "";
+
+  position: absolute;
+  left: 0;
+
+  width: 48%;
+  height: 3px;
+
+  border-radius: 999px;
+  background: #ffffff;
+
+  transform-origin: left center;
+}
+
+.opening-start-arrow::before {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+.opening-start-arrow::after {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+@keyframes startArrowMove {
+  0%,
+  100% {
+    transform: translate(0, -50%);
+  }
+
+  50% {
+    transform: translate(4px, -50%);
+  }
+}
+
+/* =========================
+   כפתור אודות
+========================= */
 
 .opening-about {
   position: absolute;
-  z-index: 3;
+  z-index: 5;
 
   top: max(3rem, env(safe-area-inset-top));
   right: max(3rem, env(safe-area-inset-right));
+
   width: clamp(5rem, 10.5vw, 9rem);
+
+  transition: transform 180ms ease;
 }
 
-/* חלונית אודות — הדיאלוג עצמו משמש כאזור לחיצה מחוץ לכרטיס */
+.opening-about:hover {
+  transform: translateY(-2px);
+}
+
+/* =========================
+   כרטיסיית אודות
+   ללא רקע שחור וללא מסך מלא
+========================= */
+
 .opening-about-dialog {
   position: fixed;
-  inset: 0;
+
+  /* פינה ימנית תחתונה */
+  inset: auto max(1rem, env(safe-area-inset-right))
+    max(1rem, env(safe-area-inset-bottom)) auto;
 
   box-sizing: border-box;
-  width: 100%;
-  max-width: none;
-  height: 100%;
-  max-height: none;
+
+  width: min(21rem, calc(100vw - 2rem));
+  max-width: calc(100vw - 2rem);
+
+  height: auto;
+  max-height: calc(100dvh - 2rem);
+
   margin: 0;
-  padding: 1rem;
+  padding: 0;
 
   border: 0;
+  border-radius: 1.25rem;
+
   background: transparent;
-  overflow-y: auto;
+  color: inherit;
+
+  overflow: visible;
 }
 
-.opening-about-dialog[open] {
-  display: flex;
-}
+/* ביטול הצללת הרקע של dialog.showModal() */
 
 .opening-about-dialog::backdrop {
-  background: rgb(9 12 55 / 65%);
+  background: transparent;
+}
+
+/* אנימציית כניסה מלמטה */
+
+.opening-about-dialog[open] {
+  display: block;
+
+  animation: aboutCardEnter 300ms
+    cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+@keyframes aboutCardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .opening-about-card {
   position: relative;
-  box-sizing: border-box;
-  flex-shrink: 0;
 
-  width: min(100%, 21rem);
-  margin: auto;
-  padding: 2.75rem 1.25rem 1.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  max-height: calc(100dvh - 2rem);
+
+  padding: 2.5rem 1.25rem 1.25rem;
 
   border: 0.125rem solid #3935ad;
   border-radius: 1.25rem;
+
   background: #ffffff;
   color: #3935ad;
 
   font-family: "Ploni", sans-serif;
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   line-height: 1.35;
   text-align: center;
+
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .opening-about-card h2,
 .opening-about-card h3 {
   margin: 0;
+
   font: inherit;
   font-weight: 700;
 }
@@ -199,9 +407,12 @@ background: linear-gradient(180deg, rgba(44, 49, 183, 0.60) 0%, rgba(0, 3, 87, 0
 
 .opening-about-character {
   display: block;
+
   width: 65%;
-  max-height: 13rem;
-  margin: 1rem auto 0.75rem;
+  max-height: 10rem;
+
+  margin: 0.75rem auto;
+
   object-fit: contain;
 }
 
@@ -213,29 +424,40 @@ background: linear-gradient(180deg, rgba(44, 49, 183, 0.60) 0%, rgba(0, 3, 87, 0
   margin-top: 1rem;
 
   font-family: "Eden", cursive;
-  font-size: 1.5rem;
-  line-height: 1.55;
+  font-size: 1.25rem;
+  line-height: 1.5;
+
   color: #171717;
+
+  overflow-wrap: anywhere;
 }
 
 .opening-about-close {
   position: absolute;
-  top: 0.25rem;
-  left: 0.25rem;
+  top: 0.2rem;
+  left: 0.2rem;
 
   display: grid;
   place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
+
+  width: 2.5rem;
+  height: 2.5rem;
 
   border: 0;
   border-radius: 50%;
+
   background: transparent;
   color: #3935ad;
 
   font: inherit;
   font-size: 2rem;
+  line-height: 1;
+
   cursor: pointer;
+}
+
+.opening-about-close:hover {
+  background: #f0f0ff;
 }
 
 .opening-about-close:focus-visible {
@@ -243,7 +465,43 @@ background: linear-gradient(180deg, rgba(44, 49, 183, 0.60) 0%, rgba(0, 3, 87, 0
   outline-offset: -0.25rem;
 }
 
-/* במסך עומד מרכזים את הקומפוזיציה ומגדילים את כפתור ההתחלה */
+/* =========================
+   מסכים צרים
+========================= */
+
+@media (max-width: 700px) {
+  .opening-about {
+    top: max(1rem, env(safe-area-inset-top));
+    right: max(1rem, env(safe-area-inset-right));
+
+    width: clamp(4.5rem, 17vw, 7rem);
+  }
+
+  .opening-start {
+    width: 23%;
+  }
+
+  .opening-about-dialog {
+    width: min(19rem, calc(100vw - 2rem));
+    max-width: calc(100vw - 2rem);
+  }
+
+  .opening-about-card {
+    padding: 2.25rem 1rem 1rem;
+    font-size: 1rem;
+  }
+
+  .opening-about-character {
+    max-height: 7rem;
+  }
+
+  .opening-about-card .opening-about-handwriting {
+    font-size: 1.1rem;
+  }
+}
+
+/* מסך עומד */
+
 @media (orientation: portrait) {
   .opening-page {
     place-items: center;
@@ -251,5 +509,24 @@ background: linear-gradient(180deg, rgba(44, 49, 183, 0.60) 0%, rgba(0, 3, 87, 0
 
   .opening-start {
     width: 23%;
+  }
+}
+
+/* נגישות — ביטול תנועה למי שמעדיף זאת */
+
+@media (prefers-reduced-motion: reduce) {
+  .opening-sticker-till,
+  .opening-sticker-bahad,
+  .opening-start-arrow {
+    animation: none;
+  }
+
+  .opening-about-dialog[open] {
+    animation: none;
+  }
+
+  .opening-start,
+  .opening-about {
+    transition: none;
   }
 }
