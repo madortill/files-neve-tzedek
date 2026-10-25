@@ -1,0 +1,21 @@
+<svg width="317" height="177" viewBox="0 0 317 177" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g filter="url(#filter0_d_842_121763)">
+<use xlink:href="#stroke0_842_121763" fill="#FDFEFF"/>
+<mask id="stroke1_842_121763" fill="white">
+<use xlink:href="#stroke0_842_121763"/>
+</mask>
+<path d="M157.5 0C244.485 0 315 39.1751 315 87.5C315 106.558 304.031 124.191 285.412 138.561C284.655 139.145 284.396 140.181 284.831 141.032C285.707 142.748 286.611 144.326 287.526 145.66C292.007 152.195 300.624 158.149 306.26 161.596C307.921 162.611 307.409 165.203 305.47 165.364C299.392 165.87 290.07 166.22 283.208 164.546C275.818 162.743 266.04 157.312 261.117 154.395C260.538 154.052 259.831 154.017 259.223 154.303C231.78 167.213 196.277 175 157.5 175C70.5152 175 0 135.825 0 87.5C0 39.1751 70.5152 0 157.5 0Z" stroke-width="2" stroke="#A1A7B4" mask="url(#stroke1_842_121763)"/>
+</g>
+<defs>
+<filter id="filter0_d_842_121763" x="0" y="0" width="317" height="177" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="2" dy="2"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.629715 0 0 0 0 0.655387 0 0 0 0 0.706731 0 0 0 1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_842_121763"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_842_121763" result="shape"/>
+</filter>
+<path id="stroke0_842_121763" d="M157.5 0C244.485 0 315 39.1751 315 87.5C315 106.558 304.031 124.191 285.412 138.561C284.655 139.145 284.396 140.181 284.831 141.032C285.707 142.748 286.611 144.326 287.526 145.66C292.007 152.195 300.624 158.149 306.26 161.596C307.921 162.611 307.409 165.203 305.47 165.364C299.392 165.87 290.07 166.22 283.208 164.546C275.818 162.743 266.04 157.312 261.117 154.395C260.538 154.052 259.831 154.017 259.223 154.303C231.78 167.213 196.277 175 157.5 175C70.5152 175 0 135.825 0 87.5C0 39.1751 70.5152 0 157.5 0Z"/>
+</defs>
+</svg>
