@@ -1,130 +1,84 @@
-.training-form {
+.training-form-screen {
+  /* אפשר להתאים את הגובה הזה למעטפת הלומדה */
+  height: var(--training-form-height, calc(100dvh - 8rem));
+  max-height: 100dvh;
   width: 100%;
-  font-family: inherit;
-}
-
-/* הטופס הקטן מוצג בשלמותו */
-.training-form-preview {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.6rem;
-
-  max-width: 100%;
-  margin-inline: auto;
-  padding: 0;
-
-  background: transparent;
-  border: 0;
-  font: inherit;
-  color: inherit;
-  cursor: zoom-in;
-}
-
-.training-form-preview img {
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: 65dvh;
-  object-fit: contain;
-
-  box-shadow: 0 0.3rem 1rem rgb(0 0 0 / 18%);
-}
-
-.training-form-preview:focus-visible {
-  outline: 0.2rem solid #275d9b;
-  outline-offset: 0.3rem;
-}
-
-/* חלון הטופס */
-.training-form-dialog {
-  box-sizing: border-box;
-  width: 95vw;
-  max-width: 95vw;
-  height: 92dvh;
-  max-height: 92dvh;
-  margin: auto;
-  padding: 0;
-
-  border: 0;
-  border-radius: 0.7rem;
-  background: #e8e8e8;
-  color: #222;
-  font-family: inherit;
-  overflow: hidden;
-}
-
-.training-form-dialog::backdrop {
-  background: rgb(0 0 0 / 65%);
-}
-
-.training-form-dialog-layout {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
   min-height: 0;
+  min-width: 0;
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 0.4rem;
+  padding: 0.4rem 1rem;
+  overflow: hidden;
+
+  font-family: inherit;
+  color: white;
 }
 
-/* הכותרת נשארת מחוץ לאזור הגלילה */
-.training-form-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-shrink: 0;
-  gap: 1rem;
-
-  padding: 0.6rem 1rem;
-  background: white;
-  border-bottom: 1px solid #ccc;
+.training-form-heading {
+  text-align: center;
+  font-family: "lin";
 }
 
-.training-form-header button {
+.training-form-heading h2 {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.1;
+    font-family: "lin";
+    letter-spacing: 3%;
+
+}
+
+.training-form-heading p {
+  margin: 0.15rem 0 0;
+  font-size: 0.85rem;
+}
+
+.training-form-body {
+  position: relative;
+  min-height: 0;
+  min-width: 0;
+}
+
+.training-form-stage {
+  position: absolute;
+  inset: 0;
   display: grid;
   place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
-
-  border: 0;
-  border-radius: 0.4rem;
-  background: #eee;
-  color: #222;
-  font: inherit;
-  cursor: pointer;
 }
 
-.training-form-scroll {
-  flex: 1;
-  min-height: 0;
-  overflow: auto;
-  overscroll-behavior: contain;
-  padding: 1rem;
+.training-form-entrance {
+  animation: training-form-rise 700ms cubic-bezier(0.22, 1, 0.36, 1)
+    both;
 }
 
-/* התמונה והשדות משתמשים באותו אזור */
+/* התמונה והשדות תמיד גדלים וקטנים יחד */
 .training-form-page {
   position: relative;
   container-type: inline-size;
-
-  width: 100%;
-  max-width: 1750px;
-  margin-inline: auto;
-
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
   background: white;
+  box-shadow: 0 0 0 1px #222, 0 0.3rem 1rem rgb(0 0 0 / 20%);
 }
 
 .training-form-image {
   display: block;
   width: 100%;
   height: auto;
-
+  max-width: none;
+  max-height: none;
+  margin: 0;
   user-select: none;
   pointer-events: none;
 }
 
-/* כל המיקומים מגיעים מקובץ ההגדרות */
 .training-form-field {
   position: absolute;
+  z-index: 1;
   box-sizing: border-box;
 
   min-width: 0;
@@ -141,13 +95,13 @@
   color: #142a44;
   background: rgb(232 242 255 / 45%);
   border: 1px solid #7f9bbc;
-  border-radius: 0.15rem;
+  border-radius: 0;
 }
 
 .training-form-field:focus {
   outline: 2px solid #275d9b;
   outline-offset: -2px;
-  background: #fff;
+  background: white;
 }
 
 textarea.training-form-field {
@@ -158,4 +112,458 @@ textarea.training-form-field {
 input[type="checkbox"].training-form-field {
   padding: 0;
   accent-color: #275d9b;
+}
+
+/* כפתור ההגדלה נפרד מהטופס */
+.training-form-enlarge {
+  position: absolute;
+  top: 15%;
+  left: 1%;
+  width: 17%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+
+  padding: 0.4rem;
+  border: 0;
+  background: transparent;
+  color: white;
+  font: inherit;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.training-form-enlarge span {
+  font-size: 1.8rem;
+}
+
+/* כפתור עזרה וטקסט בריחוף */
+.training-form-help {
+  position: absolute;
+  top: 1rem;
+  right: 1%;
+}
+
+.training-form-help-button {
+  display: grid;
+  place-items: center;
+  width: 3.3rem;
+  height: 3.3rem;
+  padding: 0;
+
+  border: 0;
+  border-radius: 50%;
+  background: #829da3;
+  color: white;
+  font: inherit;
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.training-form-tooltip {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  z-index: 3;
+  width: max-content;
+  max-width: 9rem;
+  padding: 0.45rem 0.7rem;
+
+  border-radius: 0.4rem;
+  background: #263747;
+  color: white;
+  text-align: center;
+  font-size: 0.9rem;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 150ms;
+}
+
+.training-form-help:hover .training-form-tooltip,
+.training-form-help:focus-within .training-form-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+.training-form-actions,
+.training-form-modal-actions {
+  display: flex;
+  justify-content: center;
+  padding: 0.3rem;
+}
+
+.training-form-check {
+  padding: 0.55rem 1.7rem;
+  border: 0;
+  border-radius: 2rem;
+  background: #28acff;
+  box-shadow: 0 0.2rem 0 #005d93;
+  color: white;
+  font: inherit;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  right: 30%;
+  top: 10%;
+}
+
+.training-form-screen button:focus-visible {
+  outline: 2px solid #28acff;
+  outline-offset: 3px;
+}
+
+/* חלונות */
+.training-form-dialog {
+  box-sizing: border-box;
+  max-width: 95vw;
+  max-height: 94dvh;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0.7rem;
+  overflow: hidden;
+
+  background: #f3f3f3;
+  color: #222;
+  font-family: inherit;
+}
+
+.training-form-dialog::backdrop {
+  background: rgb(0 0 0 / 65%);
+}
+
+.training-form-dialog[open] {
+  animation: training-form-rise 400ms ease-out both;
+}
+
+.training-form-dialog-large {
+  width: 94vw;
+  height: 94dvh;
+}
+
+.training-form-dialog-small {
+  width: min(90vw, 47rem);
+}
+
+.training-form-dialog-layout {
+  display: flex;
+  flex-direction: column;
+  max-height: 94dvh;
+}
+
+.training-form-dialog-large .training-form-dialog-layout {
+  height: 100%;
+}
+
+.training-form-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  background: white;
+}
+
+.training-form-dialog-header button {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: 50%;
+  background: #eee;
+  color: #222;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* גלילה קיימת רק בתצוגה המוגדלת */
+.training-form-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 1rem;
+}
+
+.training-form-scroll .training-form-page {
+  width: 100%;
+  max-width: 90rem;
+  margin-inline: auto;
+}
+
+.training-form-modal-actions {
+  flex-shrink: 0;
+  padding: 0.7rem;
+  background: white;
+}
+
+.training-form-help-content {
+  padding: 1.5rem;
+  overflow: auto;
+  white-space: pre-line;
+  line-height: 1.6;
+}
+
+.training-form-success {
+  min-height: 0;
+  overflow: auto;
+}
+
+.training-form-success img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@keyframes training-form-rise {
+  from {
+    opacity: 0;
+    transform: translateY(100dvh);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .training-form-entrance,
+  .training-form-dialog[open] {
+    animation: none;
+  }
+}
+/* חלונות עזרה וסיום נפתחים במרכז.
+   אנימציית הכניסה של הטופס עצמו נשארת מלמטה. */
+.training-form-dialog-small[open] {
+  animation: training-dialog-center 320ms ease-out both;
+}
+
+.training-form-dialog-success {
+  width: min(32.2rem, calc(100vw - 2rem));
+  height: auto;
+  border-radius: 1.9rem;
+  background: #f5f7ff;
+}
+
+.training-form-success {
+  padding: 2rem 1.5rem 1.7rem;
+  text-align: center;
+}
+
+
+.training-form-success-continue:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.training-form-success-back {
+  padding: 0.6rem;
+  border: 0;
+  background: transparent;
+  color: #0021c5;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@keyframes training-dialog-center {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .training-form-dialog-small[open] {
+    animation: none;
+  }
+}
+.training-form-dialog.training-form-dialog-success {
+  width: min(47.2rem, calc(100vw - 2rem));
+  max-width: none;
+  height: auto;
+  max-height: calc(100dvh - 2rem);
+  margin: auto;
+  padding: 0;
+
+  border: 0;
+  border-radius: 1.9rem;
+  background: #f5f7ff;
+  color: #080808;
+  overflow: auto;
+}
+
+.training-form-dialog-success .training-form-dialog-layout {
+  height: auto;
+  max-height: none;
+}
+
+.training-form-dialog-success .training-form-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+
+  padding: 2.2rem 1.5rem 3.4rem;
+  text-align: center;
+}
+
+.training-form-success-title {
+  margin: 0;
+
+  font-family: "Linbrg", sans-serif;
+  font-size: clamp(2.4rem, 5.6vw, 4rem);
+  font-weight: normal;
+  line-height: 1.15;
+
+  background: linear-gradient(
+    180deg,
+    #4564ff 0%,
+    #0021c5 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.training-form-success-message {
+  margin: 2.6rem 0 0;
+
+  color: #080808;
+  font-family: inherit;
+  font-size: clamp(1rem, 2.4vw, 1.85rem);
+  font-weight: normal;
+  line-height: 1.5;
+}
+
+.training-form-success-confirm {
+  display: grid;
+  place-items: center;
+
+  min-width: 10rem;
+  min-height: 2.8rem;
+  margin-top: 2.8rem;
+  padding: 0.25rem 1.5rem;
+
+  border: 0;
+  border-radius: 2rem;
+  background: #0098ff;
+  box-shadow: 0 0.15rem 0 #0076c6;
+  color: white;
+
+  font-family: inherit;
+  font-size: 1.45rem;
+  font-weight: bold;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.training-form-success-confirm:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.training-form-success-confirm:focus-visible {
+  outline: 2px solid #0021c5;
+  outline-offset: 4px;
+}
+
+.training-form-dialog.training-form-dialog-success[open] {
+  animation: training-success-appear 220ms ease-out both;
+}
+
+@keyframes training-success-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .training-form-dialog.training-form-dialog-success[open] {
+    animation: none;
+  }
+}
+/* חלון ההצלחה: גובה לפי התוכן ומיקום במרכז */
+dialog.training-form-dialog.training-form-dialog-success {
+  position: fixed;
+  inset: auto;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+
+  box-sizing: border-box;
+  width: min(47.2rem, calc(100vw - 2rem));
+  max-width: calc(100vw - 2rem);
+
+  height: fit-content;
+  min-height: 0;
+  max-height: calc(100dvh - 2rem);
+
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+
+  border: 0;
+  border-radius: 1.9rem;
+  background: #f5f7ff;
+}
+
+.training-form-dialog-success .training-form-dialog-layout {
+  display: block;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+}
+
+.training-form-dialog-success .training-form-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  padding: 2.2rem 1.5rem 3.4rem;
+}
+
+/* האנימציה חייבת לשמור גם על המרכוז */
+dialog.training-form-dialog.training-form-dialog-success[open] {
+  animation: success-popup-centered 220ms ease-out both;
+}
+
+@keyframes success-popup-centered {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  dialog.training-form-dialog.training-form-dialog-success[open] {
+    animation: none;
+  }
 }

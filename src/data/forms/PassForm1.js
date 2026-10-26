@@ -1,7 +1,7 @@
 
 
 import filePass from "./../../assets/images/files/file-pass-approve.svg"
-
+import successPopup from "../../assets/images/popup.svg";
 
 
 const PAGE_WIDTH = 1750;
@@ -30,10 +30,16 @@ function field(id, label, x, y, width, height, extra = {}) {
 export const passForm = {
   id: "passApproval",
   title: "אישור מעבר",
-  filePass,
+  image: filePass,
   width: PAGE_WIDTH,
   height: PAGE_HEIGHT,
+successImage: successPopup,
 
+helpText:
+  "מלאו את השדות בטופס בהתאם לפרטי התרגיל. ניתן להגדיל את הטופס באמצעות כפתור ההגדלה.",
+
+// בהמשך נוסיף כאן תשובות לפי מזהה השדה.
+answerKey: null,
   fields: [
     // מספר האישור בראש הטופס
     field(

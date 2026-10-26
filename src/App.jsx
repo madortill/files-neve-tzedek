@@ -4,7 +4,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import OpeningPage from "./components/start/OpeningPage.jsx";
-import ChapterNav1 from "./components/learning/chapter1/ChapterNav1.jsx";
+import Learning from "./components/learning/Learning.jsx";
 import EndPage from "./components/end/End";
 
 import { preloadAssets } from "./preloadAssets";
@@ -82,7 +82,7 @@ function App() {
         <Route
           path="/learning"
           element={
-            <ChapterNav1
+            <Learning
               onBack={() => navigate("/")}
               onFinish={() => navigate("/end")}
             />

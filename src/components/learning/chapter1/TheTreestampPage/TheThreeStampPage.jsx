@@ -20,7 +20,7 @@ const content = {
     { label: "מתי?", text: "תאריך כתיבת האישור ולמתי האישור "},
     { label: "למה?", text: "לאיזה צורך הכלואים יוצאים מהפלוגה" },
   ],
-  instruction: "על מנת שאישור מעבר יהיה תקני צריך להיות עליו 3 חתימות:",
+  instruction: "על מנת שאישור מעבר יהיה תקני צריך להיות עליו",
   note: "דוגמאות לסיבות ליציאה מהפלוגה: בית דין, מטבח, שמירות, משיכות, קב”ן",
 };
 
@@ -165,8 +165,8 @@ export default function TheThreeStampPage({
               </p>
 
               <p className="three-stamps-hint">
-                <img src={tap} alt="" draggable={false} />
                 לחצו על שלושת הקווים כדי לחתום
+                <img src={tap} alt="" draggable={false} />
               </p>
             </div>
 

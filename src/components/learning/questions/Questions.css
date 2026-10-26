@@ -1,0 +1,242 @@
+
+/* ממלא את כל המסך, בלי תלות בקונטיינר שמסביב */
+.q-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: #2a2a2a;
+  font-family: "lin", sans-serif;
+  /* יחידה: 1% מרוחב "העיצוב" (770x543) שנכנס במסך */
+  --u: min(1vw, 1.418vh);
+}
+
+.q-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  container-type: size;
+}
+
+/* ---------- דלת ---------- */
+.q-door {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-size: cover;
+  background-position: center;
+  box-shadow: -2vw 0 3vw rgba(0, 0, 0, 0.6);
+  transform: translateX(100%);
+  animation: q-door-close 1.1s cubic-bezier(0.55, 0, 0.35, 1) forwards;
+}
+.q-door.q-door-open {
+  transform: translateX(0);
+  animation: q-door-open 1.1s cubic-bezier(0.55, 0, 0.35, 1) 0.3s forwards;
+}
+@keyframes q-door-close { to { transform: translateX(0); } }
+@keyframes q-door-open  { to { transform: translateX(100%); } }
+
+/* ---------- שכבת התוכן ---------- */
+.q-content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.q-content.leaving { animation: q-fadeout 0.3s ease forwards; }
+
+/* קופסת העיצוב: שומרת יחס 770x543 וממורכזת. כל מה שבפנים ב-cqw */
+.q-fit {
+  position: relative;
+  width: min(100cqw, calc(100cqh * 770 / 543));
+  aspect-ratio: 770 / 543;
+  container-type: inline-size;
+}
+
+/* ---------- לוגו ותגית (בפינות המסך) ---------- */
+.q-logo {
+  position: absolute;
+  top: calc(var(--u) * 0.5);
+  left: calc(var(--u) * 0.6);
+  width: calc(var(--u) * 14);
+  animation: q-fade 0.4s ease both;
+}
+
+.q-chapter-tag {
+  --c: #d9453a;
+  --l: calc(var(--u) * 1.4);
+  --t: calc(var(--u) * 0.25);
+  position: absolute;
+  top: calc(var(--u) * 1.6);
+  right: calc(var(--u) * 1);
+  padding: calc(var(--u) * 1.2) calc(var(--u) * 3.2);
+  border-radius: calc(var(--u) * 0.6);
+  background:
+    linear-gradient(var(--c), var(--c)) top left / var(--l) var(--t) no-repeat,
+    linear-gradient(var(--c), var(--c)) top left / var(--t) var(--l) no-repeat,
+    linear-gradient(var(--c), var(--c)) top right / var(--l) var(--t) no-repeat,
+    linear-gradient(var(--c), var(--c)) top right / var(--t) var(--l) no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom left / var(--l) var(--t) no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom left / var(--t) var(--l) no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom right / var(--l) var(--t) no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom right / var(--t) var(--l) no-repeat,
+    #fff;
+  color: var(--c);
+  font-size: max(14px, calc(var(--u) * 2.3));
+  font-weight: 700;
+  white-space: nowrap;
+  animation: q-fade 0.4s ease both;
+}
+
+/* ---------- כרטיס ---------- */
+.q-card {
+  position: absolute;
+  top: 11.4cqw;
+  left: 18.5cqw;
+  width: 63cqw;
+  height: 49.1cqw;
+  background: #eceeed;
+  border-radius: 1.2cqw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: q-pop 0.45s ease both;
+}
+
+.q-back {
+  position: absolute;
+  top: 2.3cqw;
+  right: 3.3cqw;
+  width: max(30px, 3.6cqw);
+  height: max(30px, 3.6cqw);
+  padding: 0.5cqw;
+  border: 0;
+  border-radius: 50%;
+  background: #8db8e8;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.q-back svg { width: 100%; height: 100%; }
+.q-back:disabled { opacity: 0.45; cursor: default; }
+
+.q-title {
+    font-family: "lin-bold";
+  margin: 0;
+  height: 7.1cqw;
+  padding: 0.8cqw 6cqw 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: max(15px, 2.9cqw);
+  font-weight: 700;
+  color: #1f1a6b;
+}
+
+.q-notes {
+  width: 100%;
+  padding: 0 8.4cqw;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.8cqw 3.9cqw;
+}
+
+.q-note {
+  position: relative;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  aspect-ratio: 164 / 111;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+.q-note:hover { transform: translateY(-0.4cqw); }
+.q-note.selected {
+  filter: drop-shadow(0 0 0.5cqw #3b3bb5) drop-shadow(0 0 0.3cqw #3b3bb5);
+}
+
+/* הטקסט של התשובה, על משטח לבן (הפתק לבן) כדי לכסות טקסט אפוי ב-SVG */
+.q-note-text {
+  position: absolute;
+  top: 6%;
+  left: 5%;
+  right: 5%;
+  bottom: 26%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  font-size: max(11px, 1.6cqw);
+  line-height: 1.25;
+  color: #111;
+}
+
+/* ---------- כפתור: אפור כשאין בחירה, אדום-כתום אחרי בחירה ---------- */
+.q-btn {
+  margin-top: auto;
+  margin-bottom: 2.3cqw;
+  border: 0;
+  border-radius: 10cqw;
+  color: #fff;
+  font-family: inherit;
+  font-size: max(13px, 2.1cqw);
+  padding: 0.9cqw 3.2cqw;
+  display: inline-flex;
+  align-items: center;
+  gap: 1cqw;
+  background: #ee6a50;
+  box-shadow: 0 0.3cqw 0 #c4533c;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.q-btn:disabled {
+  background: #aeb0b0;
+  box-shadow: 0 0.3cqw 0 #8f9191;
+  cursor: default;
+}
+
+@keyframes q-fade    { from { opacity: 0; } to { opacity: 1; } }
+@keyframes q-fadeout { to { opacity: 0; } }
+@keyframes q-pop     { from { opacity: 0; transform: translateY(2cqw) scale(0.97); } to { opacity: 1; transform: none; } }
+
+/* ---------- מובייל (מסך צר): פתקים בעמודה אחת, מידות ב-px ---------- */
+@media (max-width: 640px) {
+  .q-content { align-items: stretch; }
+  .q-fit {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    container-type: normal;
+  }
+
+  .q-logo { width: 80px; top: 6px; left: 8px; }
+  .q-chapter-tag { top: 10px; right: 10px; font-size: 14px; padding: 7px 16px; border-radius: 5px; --l: 10px; --t: 2px; }
+
+  .q-card {
+    top: 62px;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    height: auto;
+    border-radius: 10px;
+    overflow-y: auto;
+  }
+  .q-back { top: 12px; right: 12px; width: 34px; height: 34px; padding: 5px; }
+  .q-title { height: auto; min-height: 58px; padding: 12px 56px 8px; font-size: 18px; }
+  .q-notes { grid-template-columns: 1fr; gap: 14px; padding: 6px 20px 0; }
+  .q-note { aspect-ratio: 164 / 100; min-height: 100px; }
+  .q-note-text { font-size: 15px; }
+  .q-btn { font-size: 16px; padding: 8px 28px; gap: 8px; margin: 18px 0 16px; flex-shrink: 0; }
+}

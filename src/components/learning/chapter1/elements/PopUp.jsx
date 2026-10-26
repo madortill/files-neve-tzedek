@@ -1,74 +1,96 @@
-
-import { useState } from "react";
+import { useEffect, useId, useRef } from "react";
+import { createPortal } from "react-dom";
 import marker from "../../../../assets/images/marker.svg";
 import "./PopUp.css";
 
 export default function PopUp({ onContinue, onClose }) {
-  const [isHighlighted, setIsHighlighted] = useState(false);
+  const dialogRef = useRef(null);
+  const titleId = useId();
 
-  const title = "דגשים:";
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    const previousOverflow = document.body.style.overflow;
 
-  const instructions = [
-    "באישור המעבר נרשום את השם המלא של החייל ומספרו האישי",
-    "בחלק של ההערות נציין את רמ״ס הכלוא",
-    "ברגע שסיימנו לרשום את כל השמות, נחתום את האישור מעבר בצורת האות Z ונרשום כמה חיילים בטופס",
-  ];
+    dialog.showModal();
+    document.body.style.overflow = "hidden";
 
-  return (
-    <div className="popup-overlay">
-      <div
-        className="popup-content"
-        dir="rtl"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="popup-title"
+    return () => {
+      if (dialog.open) dialog.close();
+      document.body.style.overflow = previousOverflow;
+    };
+  }, []);
+
+  return createPortal(
+    <dialog
+      ref={dialogRef}
+      className="notes-popup"
+      dir="rtl"
+      aria-labelledby={titleId}
+      onCancel={(event) => {
+        event.preventDefault();
+        onClose();
+      }}
+    >
+      <button
+        type="button"
+        className="notes-popup-back"
+        onClick={onClose}
+        aria-label="חזרה למסך הקודם"
       >
-        <h2 id="popup-title" className="popup-title">
-          {title}
-        </h2>
-
-        <ul className="popup-instructions">
-          <li>{instructions[0]}</li>
-          <li>{instructions[1]}</li>
-        </ul>
-
-        <div className="popup-highlight-area">
-          <p className="popup-highlight-paragraph">
-            <span
-              className={`popup-highlight-text ${
-                isHighlighted ? "is-highlighted" : ""
-              }`}
-            >
-              {instructions[2]}
-            </span>
-          </p>
-
-          <button
-            type="button"
-            className="popup-marker-button"
-            onClick={() => setIsHighlighted((prev) => !prev)}
-            aria-label={
-              isHighlighted ? "הסרת ההדגשה" : "הדגשת הטקסט במרקר"
-            }
-            aria-pressed={isHighlighted}
-          >
-            <img
-              src={marker}
-              alt=""
-              className="popup-marker"
-              draggable="false"
-            />
-          </button>
-        </div>
-
-        <button
-          type="button"
-          className="popup-continue"
-          onClick={onContinue}
+        <svg
+          viewBox="0 0 40 40"
+          fill="none"
+          aria-hidden="true"
         >
-          לטופס!
-        </button>
+          <path
+            d="M9 20H31M22 11L31 20L22 29"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
+
+      <h2 id={titleId} className="notes-popup-title">
+        דגשים:
+      </h2>
+
+      <ul className="notes-popup-list">
+        <li>
+          באישור המעבר נרשום את השם המלא של החייל ומספרו האישי
+        </li>
+
+        <li>
+          בחלק של ההערות נציין את רמ״ס הכלוא
+        </li>
+      </ul>
+
+      <div className="notes-popup-highlight">
+        <img
+          src={marker}
+          className="notes-popup-marker"
+          alt=""
+          draggable={false}
+        />
+
+        <p>
+          <span>
+            ברגע שסיימנו לרשום את כל השמות, נחתום את האישור
+            מעבר בצורת האות Z ונרשום כמה חיילים בטופס
+          </span>
+        </p>
       </div>
-    </div>
+
+      <button
+        type="button"
+        className="notes-popup-continue"
+        onClick={onContinue}
+        autoFocus
+      >
+        לטופס!
+      </button>
+    </dialog>,
+    document.body
   );
 }
