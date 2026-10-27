@@ -1,0 +1,201 @@
+.fps,
+.fps * {
+  box-sizing: border-box;
+}
+
+.fps {
+  position: relative;
+  isolation: isolate;
+
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+
+  container-type: size;
+  --paper-h: 92cqh;
+}
+
+/* ---------- הסצנה מאחור ---------- */
+
+.fps__scene {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.fps__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  background: rgba(14, 15, 67, 0.45);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+/* ---------- הטופס ---------- */
+
+.fps__form {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+
+  animation: fps-form-in 350ms ease both;
+}
+
+/*
+  גובה הנייר נקבע לפי המסך, והרוחב נגזר מיחס ה-SVG.
+  כך האחוזים של השורה הממולאת תמיד צמודים לטופס עצמו.
+*/
+.fps__paper {
+  position: relative;
+  height: var(--paper-h);
+  pointer-events: auto;
+}
+
+.fps__paper img {
+  display: block;
+  height: 100%;
+  width: auto;
+  user-select: none;
+  filter: drop-shadow(0 0.6rem 1.2rem rgba(0, 0, 0, 0.45));
+}
+
+/* ---------- השורה הראשונה ---------- */
+
+.fps__row {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  /* גודל הטקסט יחסי לגובה הדף */
+  font-size: calc(var(--paper-h) * 0.0155);
+}
+
+.fps__cell {
+  position: absolute;
+  top: calc(var(--row-top) * 1%);
+  height: calc(var(--row-h) * 1%);
+  right: calc(var(--right) * 1%);
+  width: calc(var(--width) * 1%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #0b2a7a;
+  font-family: comix, sans-serif;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+
+  animation: fps-write 600ms ease-out both;
+}
+
+/* ---------- חצים ---------- */
+
+.fps__arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+
+  display: grid;
+  place-items: center;
+
+  width: clamp(2.5rem, 6cqh, 3.5rem);
+  height: clamp(2.5rem, 6cqh, 3.5rem);
+  padding: 0;
+
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: filter 150ms ease;
+}
+
+.fps__arrow svg {
+  width: 60%;
+  height: 60%;
+}
+
+.fps__arrow--back {
+  right: 2.5%;
+  background: #9aa0ae;
+}
+
+.fps__arrow--next {
+  left: 2.5%;
+  background: #28acff;
+}
+
+.fps__arrow:hover {
+  filter: brightness(1.08);
+}
+
+.fps__arrow:focus-visible {
+  outline: 0.18rem solid #163d80;
+  outline-offset: 0.2rem;
+}
+
+/* ---------- אנימציות ---------- */
+
+@keyframes fps-form-in {
+  from {
+    opacity: 0;
+    transform: translateY(2%);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* הכתב נחשף מימין לשמאל */
+@keyframes fps-write {
+  from {
+    clip-path: inset(0 0 0 100%);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fps__form,
+  .fps__cell {
+    animation: none;
+  }
+}
+.fps__tape {
+  position: absolute;
+  top: -0.5vw;
+  left: -4vw;
+  width: clamp(90px, 12vw, 140px);
+  height: clamp(24px, 3.2vw, 36px);
+  background: rgba(255, 213, 154, 0.30);
+  border: 0.328px solid rgba(136, 154, 170, 0.20);
+  transform: rotate(-35deg);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.fps__tape2 {
+  position: absolute;
+  bottom: -0.5vw;
+  right: -4vw;
+  width: clamp(90px, 12vw, 140px);
+  height: clamp(24px, 3.2vw, 36px);
+  background: rgba(255, 213, 154, 0.30);
+  border: 0.328px solid rgba(136, 154, 170, 0.20);
+  transform: rotate(-35deg);
+  pointer-events: none;
+  z-index: 5;
+}

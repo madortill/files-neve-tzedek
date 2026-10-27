@@ -1,0 +1,40 @@
+.file-asking {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(14, 15, 67, 0.32);
+  overflow: hidden;
+}
+
+/* הנייר "גדל" מהמקום שבו הוא היה מונח על השולחן (בערך מרכז-תחתון) */
+.file-asking__img {
+  max-width: 92%;
+  max-height: 85%;
+  object-fit: contain;
+  transform-origin: 50% 75%;
+  animation: file-asking-grow 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes file-asking-grow {
+  from { transform: translate(-8%, 30%) scale(0.18); opacity: 0.4; }
+  to   { transform: none; opacity: 1; }
+}
+
+.file-asking__continue {
+  padding: 8px 28px;
+  border: 0;
+  border-radius: 999px;
+  background: #1a73e8;
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .file-asking__img { animation: none; }
+}

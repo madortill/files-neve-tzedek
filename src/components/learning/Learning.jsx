@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 
 import ChapterNav1 from "./chapter1/ChapterNav1.jsx";
 import ChapterNav2 from "./chapter2/ChapterNav2.jsx";
+import ChapterNav3 from "./chapter3/ChapterNav3.jsx";
 
 // כשפרק 3 יהיה מוכן, הוסיפי כאן את ה-import שלו.
 
-const chapters = [ChapterNav1, ChapterNav2];
+const chapters = [ChapterNav1, ChapterNav2, ChapterNav3];
 
 const STORAGE_KEY = "forms-course:learning";
 
