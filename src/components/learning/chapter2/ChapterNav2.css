@@ -1,4 +1,4 @@
-.chapter2,
+/* .chapter2,
 .chapter2 * {
   box-sizing: border-box;
 }
@@ -38,7 +38,6 @@
   object-fit: contain;
 }
 
-/* זה השטח שנשאר אחרי הלוגואים וכפתור החזרה */
 .chapter2-content {
   min-width: 100vw;
   min-height: 100vh;
@@ -49,10 +48,7 @@ backdrop-filter: blur(5px);  display: grid;
   container-type: size;
 }
 
-/*
-  היחס כאן הוא קירוב ליחס המסכים בתמונות ששלחת.
-  כל הסצנה מצטמצמת יחד, בלי למתוח את הרקע.
-*/
+
 .chapter2-frame {
   position: relative;
   isolation: isolate;
@@ -63,13 +59,11 @@ backdrop-filter: blur(5px);  display: grid;
   min-height: 0;
 
   background:
-    /* url("../../../assets/images/out.svg") */
     center / contain no-repeat;
 
   container-type: size;
 }
 
-/* FormViewer משתמש בגובה הזמין בתוך המסגרת */
 .chapter2-frame .training-form-screen {
   --training-form-height: 100%;
   height: 100%;
@@ -128,5 +122,165 @@ backdrop-filter: blur(5px);  display: grid;
   .chapter2-back {
     width: 2.2rem;
     height: 2.2rem;
+  }
+} */
+ .chapter2,
+.chapter2 * {
+  box-sizing: border-box;
+}
+
+.chapter2 {
+  position: relative;
+  isolation: isolate;
+
+  width: 100%;
+  height: 100dvh;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+
+  background: #eef3f6;
+  font-family: inherit;
+}
+
+/* הרקע מכסה את כל הפרק */
+.chapter2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  background-image: url("../../../assets/images/out.svg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  pointer-events: none;
+}
+
+/* סמלים — שמאל למעלה, מעל שכבת הטשטוש */
+.chapter2-header {
+  position: absolute;
+  top: max(0.65rem, env(safe-area-inset-top));
+  left: max(0.65rem, env(safe-area-inset-left));
+  z-index: 10;
+
+  width: max-content;
+  max-width: calc(100% - 1.3rem);
+}
+
+.chapter2-logos {
+  display: flex;
+  flex-direction: row;
+  direction: ltr;
+  align-items: flex-start;
+  gap: 0.55rem;
+}
+
+.chapter2-logos img {
+  display: block;
+  width: auto;
+  height: clamp(2.5rem, 9dvh, 4.5rem);
+  object-fit: contain;
+}
+
+/* אין כאן גובה מינימלי של מסך בנוסף למעטפת */
+.chapter2-content {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  min-width: 0;
+  min-height: 0;
+}
+
+.chapter2-frame {
+  position: relative;
+  isolation: isolate;
+
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+
+  /* הרקע כבר מוגדר על הפרק */
+  background: transparent;
+  container-type: size;
+}
+
+/* מקום לכותרת הטופס ולניווט כשהטופס מוצג */
+.chapter2-frame .training-form-screen {
+  --training-form-height: 100%;
+
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding:
+    clamp(3.5rem, 10dvh, 5rem)
+    1rem
+    4.25rem;
+}
+
+/* חזרה — ימין למטה */
+.chapter2-controls {
+  position: absolute;
+  right: max(0.85rem, env(safe-area-inset-right));
+  bottom: max(0.85rem, env(safe-area-inset-bottom));
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.chapter2-back {
+  display: grid;
+  place-items: center;
+
+  width: clamp(2.5rem, 6dvh, 3.5rem);
+  height: clamp(2.5rem, 6dvh, 3.5rem);
+  flex-shrink: 0;
+  padding: 0.55rem;
+
+  border: 0;
+  border-radius: 50%;
+  background: #28acff;
+  box-shadow: 0 0.15rem 0 #005d93;
+  color: white;
+  cursor: pointer;
+}
+
+.chapter2-back svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.chapter2-back:disabled {
+  background: #c7c7c7;
+  box-shadow: 0 0.15rem 0 #626262;
+  cursor: default;
+}
+
+.chapter2-back:focus-visible {
+  outline: 0.18rem solid #163d80;
+  outline-offset: 0.2rem;
+}
+
+@media (max-height: 500px) {
+  .chapter2-logos img {
+    height: 2.25rem;
+  }
+
+  .chapter2-back {
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0.4rem;
+  }
+
+  .chapter2-frame .training-form-screen {
+    padding-top: 3rem;
+    padding-bottom: 3.25rem;
   }
 }

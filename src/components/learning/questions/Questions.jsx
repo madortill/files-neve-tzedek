@@ -171,7 +171,7 @@ export default function Questions({
         {showContent && (
           <div className={`q-content ${phase === "leaving" ? "leaving" : ""}`}>
     
-        <div className="q-chapter-tag">שאלות פרק {chapterNumber}</div>
+        {/* <div className="q-chapter-tag">שאלות פרק {chapterNumber}</div> */}
 
             <div className="q-fit">
               <div className="q-card" key={index}>
