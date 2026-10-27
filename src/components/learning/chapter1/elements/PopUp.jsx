@@ -1,11 +1,33 @@
-import { useEffect, useId, useRef } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import marker from "../../../../assets/images/marker.svg";
 import "./PopUp.css";
 
-export default function PopUp({ onContinue, onClose }) {
+const POPUP_CONTENT = {
+  1: {
+    items: [
+      "באישור המעבר נרשום את השם המלא של החייל ומספרו האישי",
+      "בחלק של ההערות נציין את רמ״ס הכלוא",
+    ],
+    highlight:
+      "ברגע שסיימנו לרשום את כל השמות, נחתום את האישור מעבר בצורת האות Z ונרשום כמה חיילים בטופס",
+  },
+  2: {
+    items: [
+      "תצפו בעוד רגע בטופס של מסדר חולים - המסדר הינו מסדר",
+      "יומי לרישום החיילים שרוצים לראות גורם רפואי.",
+    ],
+    highlight:
+      "״מסדר בעיות״ הוא הליך רשמי שנועד לאפשר לכלואים להציג בעיות אישיות, רפואיות, נפשיות או ת״ש לגורם עליון",
+  },
+};
+
+export default function PopUp({ num = 1, onContinue, onClose }) {
   const dialogRef = useRef(null);
   const titleId = useId();
+  const [highlighted, setHighlighted] = useState(false);
+
+  const { items, highlight } = POPUP_CONTENT[num];
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -37,11 +59,7 @@ export default function PopUp({ onContinue, onClose }) {
         onClick={onClose}
         aria-label="חזרה למסך הקודם"
       >
-        <svg
-          viewBox="0 0 40 40"
-          fill="none"
-          aria-hidden="true"
-        >
+        <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
           <path
             d="M9 20H31M22 11L31 20L22 29"
             stroke="currentColor"
@@ -57,27 +75,33 @@ export default function PopUp({ onContinue, onClose }) {
       </h2>
 
       <ul className="notes-popup-list">
-        <li>
-          באישור המעבר נרשום את השם המלא של החייל ומספרו האישי
-        </li>
-
-        <li>
-          בחלק של ההערות נציין את רמ״ס הכלוא
-        </li>
+        {items.map((text) => (
+          <li key={text}>{text}</li>
+        ))}
       </ul>
 
       <div className="notes-popup-highlight">
-        <img
-          src={marker}
-          className="notes-popup-marker"
-          alt=""
-          draggable={false}
-        />
+        <button
+          type="button"
+          className="notes-popup-marker-button"
+          onClick={() => setHighlighted(true)}
+          aria-label="סמן את הטקסט"
+        >
+          <img
+            src={marker}
+            className="notes-popup-marker"
+            alt=""
+            draggable={false}
+          />
+        </button>
 
         <p>
-          <span>
-            ברגע שסיימנו לרשום את כל השמות, נחתום את האישור
-            מעבר בצורת האות Z ונרשום כמה חיילים בטופס
+          <span
+            className={`notes-popup-highlight-text ${
+              highlighted ? "is-highlighted" : ""
+            }`}
+          >
+            {highlight}
           </span>
         </p>
       </div>

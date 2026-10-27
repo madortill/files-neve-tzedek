@@ -105,13 +105,9 @@ export const TlunaForm = {
     field(
       "incidentDescriptionLine2",
       "תיאור העבירה — שורה שנייה",
-      95, 753, 1496, 42
+      95, 753, 1496, 100
     ),
-    field(
-      "incidentDescriptionLine3",
-      "תיאור העבירה — שורה שלישית",
-      95, 807, 1496, 42
-    ),
+
 
     // פרטי המתלונן
     field(
@@ -195,35 +191,16 @@ export const TlunaForm = {
     field(
       "detaineeStatementLine2",
       "דברי הכלוא — שורה שנייה",
-      70, 1284, 1478, 38
-    ),
-    field(
-      "detaineeStatementLine3",
-      "דברי הכלוא — שורה שלישית",
-      70, 1333, 1478, 38
-    ),
-    field(
-      "detaineeStatementLine4",
-      "דברי הכלוא — שורה רביעית",
-      70, 1377, 1478, 38
-    ),
-    field(
-      "detaineeStatementLine5",
-      "דברי הכלוא — שורה חמישית",
-      70, 1420, 1478, 38
+      70, 1284, 1478, 180
     ),
 
     // דברי העד / העדים
     field(
       "witnessStatementLine1",
       "דברי העדים — שורה ראשונה",
-      65, 1630, 1515, 54
+      65, 1630, 1515, 124
     ),
-    field(
-      "witnessStatementLine2",
-      "דברי העדים — שורה שנייה",
-      68, 1703, 1507, 47
-    ),
+
 
     // ג. ההחלטה
     field(

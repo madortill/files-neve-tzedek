@@ -146,40 +146,47 @@
   grid-template-columns: 1fr 1fr;
   gap: 3.8cqw 3.9cqw;
 }
-
 .q-note {
   position: relative;
-  border: 0;
+  display: block;
+  width: 100%;
   padding: 0;
-  background-color: transparent;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  aspect-ratio: 164 / 111;
-  font-family: inherit;
+  border: 0;
+  background: transparent !important;   /* בלי רקע לבן */
   cursor: pointer;
-  transition: transform 0.15s ease, filter 0.15s ease;
-}
-.q-note:hover { transform: translateY(-0.4cqw); }
-.q-note.selected {
-  filter: drop-shadow(0 0 0.5cqw #3b3bb5) drop-shadow(0 0 0.3cqw #3b3bb5);
+  transition: transform 150ms ease, filter 150ms ease;
 }
 
-/* הטקסט של התשובה, על משטח לבן (הפתק לבן) כדי לכסות טקסט אפוי ב-SVG */
+.q-note-img {
+  display: block;
+  width: 100%;
+  height: auto;          /* הפתק קובע את הגובה */
+  pointer-events: none;
+}
+
 .q-note-text {
   position: absolute;
-  top: 6%;
-  left: 5%;
-  right: 5%;
-  bottom: 26%;
-  background: #fff;
+  inset: 0;
+  z-index: 1;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  padding: 0 12%;        /* שוליים מקצוות הפתק */
+  box-sizing: border-box;
+
+  background: none !important;   /* זה מה שיצר את הלבן */
+  color: #222;
   text-align: center;
-  overflow: hidden;
-  font-size: max(11px, 1.6cqw);
+  font-size: clamp(14px, 1.5vw, 22px);
   line-height: 1.25;
-  color: #111;
+  overflow-wrap: anywhere;
+}
+
+.q-note.selected {
+  transform: scale(1.03);
+  filter: drop-shadow(0 0 8px rgba(0, 2, 110, 0.9));
 }
 
 /* ---------- כפתור: אפור כשאין בחירה, אדום-כתום אחרי בחירה ---------- */

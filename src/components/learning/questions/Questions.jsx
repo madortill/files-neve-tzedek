@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Questions.css";
 
 import note from "../../../assets/images/answerBGNote.svg";
@@ -77,7 +77,106 @@ function buildQuestions(part) {
     .filter(Boolean)
     .map((q) => ({ ...q, options: shuffle([q.rightAns, ...q.wrongAns]) }));
 }
+function getProgressKey(chapterNumber, part) {
+  return `forms-course:questions:progress:${chapterNumber}:${part}`;
+}
 
+const progressMemory = new Map();
+
+function readQuestionProgress(key) {
+  try {
+    const raw = sessionStorage.getItem(key);
+
+    if (raw) {
+      const saved = JSON.parse(raw);
+
+      if (saved?.version === 1) {
+        return saved;
+      }
+    }
+  } catch {
+    // גיבוי בזיכרון אם האחסון אינו זמין.
+    return progressMemory.get(key) ?? null;
+  }
+
+  return null;
+}
+
+function saveQuestionProgress(key, progress) {
+  const saved = {
+    version: 1,
+    ...progress,
+  };
+
+  progressMemory.set(key, saved);
+
+  try {
+    sessionStorage.setItem(key, JSON.stringify(saved));
+  } catch {
+    // השמירה בזיכרון ממשיכה לעבוד במעבר פנימי בין routes.
+  }
+}
+
+function createQuestionProgress(part, key) {
+  const saved = readQuestionProgress(key);
+  const freshQuestions = buildQuestions(part);
+
+  const questions = freshQuestions.map((question) => {
+    const previous = saved?.questions?.find(
+      (item) => item.id === question.id
+    );
+
+    const expectedOptions = [
+      question.rightAns,
+      ...question.wrongAns,
+    ];
+
+    // משחזרים את הסדר רק אם אפשרויות השאלה לא השתנו.
+    const remaining = [...expectedOptions];
+
+    const validOrder =
+      Array.isArray(previous?.options) &&
+      previous.options.length === expectedOptions.length &&
+      previous.options.every((option) => {
+        const position = remaining.indexOf(option);
+
+        if (position === -1) return false;
+
+        remaining.splice(position, 1);
+        return true;
+      });
+
+    return {
+      ...question,
+      options: validOrder ? previous.options : question.options,
+    };
+  });
+
+  const answers = questions.map((question) => {
+    const previousIndex = saved?.questions?.findIndex(
+      (item) => item.id === question.id
+    );
+
+    const previousAnswer =
+      previousIndex >= 0 ? saved?.answers?.[previousIndex] : null;
+
+    return question.options.includes(previousAnswer)
+      ? previousAnswer
+      : null;
+  });
+
+  const previousQuestionId = saved?.questions?.[saved?.index]?.id;
+
+  const restoredIndex = questions.findIndex(
+    (question) => question.id === previousQuestionId
+  );
+
+  return {
+    questions,
+    answers,
+    index: restoredIndex >= 0 ? restoredIndex : 0,
+  };
+}
 /**
  * props:
  *  part          - "first" (שתי השאלות הראשונות) או "final" (4 האחרונות + מה שטעינו)
@@ -86,45 +185,93 @@ function buildQuestions(part) {
  *  onFinish      - נקרא אחרי שהדלת נפתחת, עם
  *                  { correct, total, missedIds, overallCorrect?, overallTotal? }
  */
+
 export default function Questions({
   part = "first",
   chapterNumber = 1,
   onBack,
   onFinish,
 }) {
-  const [questions] = useState(() => buildQuestions(part));
+  return (
+    <QuestionsContent
+      key={`${chapterNumber}:${part}`}
+      part={part}
+      chapterNumber={chapterNumber}
+      onBack={onBack}
+      onFinish={onFinish}
+    />
+  );
+}
+
+function QuestionsContent({
+  part,
+  chapterNumber,
+  onBack,
+  onFinish,
+}) {
+  const progressKey = getProgressKey(chapterNumber, part);
+
+  const [progress, setProgress] = useState(() =>
+    createQuestionProgress(part, progressKey)
+  );
+
+  const { questions, answers, index } = progress;
   const total = questions.length;
 
-  const [index, setIndex] = useState(0);
-  const [phase, setPhase] = useState("closing"); // closing -> ready -> leaving
-  const [answers, setAnswers] = useState(() => Array(total).fill(null));
+  const [phase, setPhase] = useState("closing");
 
   const question = questions[index];
   const selected = answers[index];
 
-  function handleSelect(opt) {
-    setAnswers((prev) => {
-      const next = [...prev];
-      next[index] = opt;
-      return next;
-    });
+  // שומר גם את סדר האפשרויות שנוצר בכניסה הראשונה.
+  useEffect(() => {
+    saveQuestionProgress(progressKey, progress);
+  }, [progressKey, progress]);
+
+  function updateProgress(patch) {
+    const next = {
+      ...progress,
+      ...patch,
+    };
+
+    // שמירה מיידית, לפני יציאה אפשרית מהקומפוננטה.
+    saveQuestionProgress(progressKey, next);
+    setProgress(next);
+  }
+
+  function handleSelect(option) {
+    if (phase !== "ready") return;
+
+    const nextAnswers = [...answers];
+    nextAnswers[index] = option;
+
+    updateProgress({ answers: nextAnswers });
   }
 
   function handleNext() {
-    if (selected === null) return;
+    if (phase !== "ready" || selected === null) return;
+
+    saveQuestionProgress(progressKey, progress);
+
     if (index === total - 1) {
-      setPhase("leaving"); // הדלת נפתחת ואז onFinish
+      setPhase("leaving");
       return;
     }
-    setIndex((i) => i + 1);
+
+    updateProgress({ index: index + 1 });
   }
 
   function handleBack() {
+    if (phase !== "ready") return;
+
+    saveQuestionProgress(progressKey, progress);
+
     if (index === 0) {
       onBack?.();
       return;
     }
-    setIndex((i) => i - 1);
+
+    updateProgress({ index: index - 1 });
   }
 
   function finish() {
@@ -198,15 +345,21 @@ export default function Questions({
                 <div className="q-notes">
                   {question.options.map((opt, i) => (
                     <button
-                      key={i}
-                      type="button"
-                      className={`q-note ${selected === opt ? "selected" : ""}`}
-                      style={{ backgroundImage: `url(${note})` }}
-                      onClick={() => handleSelect(opt)}
-                    >
-                      {/* משטח לבן שמכסה טקסט שאפוי בתוך ה-SVG (למשל "תשובה 1") */}
-                      <span className="q-note-text">{opt}</span>
-                    </button>
+                        key={i}
+                        type="button"
+                        className={`q-note ${selected === opt ? "selected" : ""}`}
+                        onClick={() => handleSelect(opt)}
+                        aria-pressed={selected === opt}
+                        disabled={phase !== "ready"}
+                        >
+                        <img
+                            src={note}
+                            className="q-note-img"
+                            alt=""
+                            draggable={false}
+                        />
+                        <span className="q-note-text">{opt}</span>
+                        </button>
                   ))}
                 </div>
 

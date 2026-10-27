@@ -178,12 +178,12 @@ export default function ChapterNav({ onFinish, onBack }) {
       }`}
       dir="rtl"
     >
-      {/* <img
+      <img
         src={BGChapter1}
         className="chapter-nav-background"
         alt=""
         draggable={false}
-      /> */}
+      />
 
       <div
         className="chapter-nav-tint"
@@ -278,6 +278,7 @@ export default function ChapterNav({ onFinish, onBack }) {
 
       {showPopup && (
         <PopUp
+          PopUp num={1}
           onContinue={handlePopupContinue}
           onClose={handlePopupClose}
         />

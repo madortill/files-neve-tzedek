@@ -66,14 +66,14 @@
 
 .ft__bubble span {
   position: absolute;
-  inset: 12% 11% 24%;
+  inset: 16% 13% 24%;
 
   display: grid;
   place-items: center;
 
   color: #111;
   font-family: inherit;
-  font-size: clamp(0.7rem, 1.65cqw, 1.3rem);
+  font-size: clamp(0.6rem, 1.60cqw, 1.2rem);
   line-height: 1.3;
   text-align: center;
   overflow-wrap: anywhere;
@@ -82,27 +82,35 @@
 .ft__bubble--prisoner {
   left: 24%;
   top: 34%;
-  width: 21%;
+  width: 15%;
   animation-delay: 200ms;
+  transform: rotatey(-180deg);
+  font-family: comix;
+}
+.ft__bubble--prisoner span {
+    transform: rotatey(-180deg);
+
 }
 
 .ft__bubble--soldier {
+  font-family: comix;
   right: 28%;
   top: 37%;
-  width: 26%;
+  width: 20%;
   animation-delay: 850ms;
 }
 
 .ft__hand-block {
   position: absolute;
-  right: 26%;
-  bottom: 25%;
+  right: 28%;
+  bottom: 28%;
 
-  width: 7%;
+  width: 3%;
   padding: 0;
   border: 0;
   background: transparent;
   cursor: pointer;
+  transform: rotate(-20deg);
 }
 
 .ft__hand-block img {
@@ -207,7 +215,7 @@
 .ft__sheet {
   position: absolute;
   left: 4.8175%;
-  top: 12.2967%;
+  top: 7.2967%;
   width: 90.5109%;
   height: 84.5528%;
 
@@ -240,7 +248,8 @@
 
 .ft__paper-content h2 {
   margin: 0 0 0.8em;
-
+font-family: "lin";
+letter-spacing: 2%;
   font-size: 1.25em;
   font-weight: 700;
   line-height: 1.25;
@@ -297,7 +306,7 @@
   display: grid;
   place-items: end start;
 
-  width: 22%;
+  width: 20%;
   min-width: 2.5rem;
   aspect-ratio: 1.3;
   flex-shrink: 0;
@@ -332,4 +341,58 @@
 .ft__pull:disabled {
   cursor: default;
   opacity: 0.55;
+}
+/* חזרה לדו-שיח שכבר ראינו: הבועות מופיעות מיד */
+.ft--visited .ft__bubble {
+  animation: none;
+  opacity: 1;
+}
+
+/* הבלוק גדל מהידיים של החייל (מיקום משוער של ft__hand-block) */
+.ft__note {
+  transform-origin: 70.5% 72%;
+  animation: ft-note-grow 650ms cubic-bezier(0.2, 0.8, 0.25, 1) both;
+}
+
+@keyframes ft-note-grow {
+  from { opacity: 0; transform: scale(0.06); }
+  35%  { opacity: 1; }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.ft__note-backdrop {
+  animation: ft-backdrop-in 400ms ease both;
+}
+
+@keyframes ft-backdrop-in {
+  from { opacity: 0; }
+  to   { opacity: 0.99; }
+}
+
+/* הפיכת הדף */
+.ft__board-start { opacity: var(--start, 1); }
+
+.ft__board-end {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: var(--end, 0);
+  pointer-events: none;
+  user-select: none;
+}
+
+.ft__sheet {
+  transform-origin: 50% 0;
+  opacity: calc(1 - var(--p, 0) * 1.4);
+  transform:
+    translateY(calc(var(--p, 0) * -8%))
+    scaleY(calc(1 - var(--p, 0) * 0.15));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ft__note,
+  .ft__note-backdrop { animation: none; }
 }

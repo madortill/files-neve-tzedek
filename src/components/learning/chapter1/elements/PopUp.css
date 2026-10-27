@@ -343,21 +343,65 @@
   text-align: center;
 }
 
-.notes-popup-highlight span {
+
+.notes-popup-highlight-text {
   padding-inline: 0.25rem;
-  background: #ffffb4;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
+
+  background-image: linear-gradient(to left, #ffffb4, #ffffb4);
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: 0% 100%;
+
+  transition: background-size 1.6s ease;
 }
 
-.notes-popup-marker {
+.notes-popup-highlight-text.is-highlighted {
+  background-size: 100% 100%;
+}
+
+.notes-popup-marker-button {
   position: absolute;
+  z-index: 2;
   top: -1.4rem;
   right: -2.2rem;
   width: 3rem;
   height: 3rem;
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform 0.2s ease;
+}
+
+.notes-popup-marker-button:hover {
+  transform: rotate(-10deg) scale(1.08);
+}
+
+.notes-popup-marker {
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  .notes-popup-marker-button {
+    right: -1.5rem;
+    width: 2.3rem;
+    height: 2.3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notes-popup-highlight-text,
+  .notes-popup-marker-button {
+    transition: none;
+  }
 }
 
 .notes-popup-continue {

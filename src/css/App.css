@@ -31,6 +31,10 @@ body {
   src: url('../assets/fonts/ploni-bold-aaa.otf');
 }
 @font-face {
+  font-family: comix;
+  src: url('../assets/fonts/COMIXNO2CLM_MEDIUM-WEBFONT.TTF');
+}
+@font-face {
   font-family: ploni;
   src: url('../assets/fonts/ploni-regular-aaa.otf');
 }
