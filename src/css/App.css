@@ -10,7 +10,7 @@ body {
     text-align: center;
     overflow: hidden;
     /* חשוב מאוד! */
-    Font-size: calc(10px + 0.5vw);
+    /* Font-size: calc(10px + 0.5vw); */
 }
 
 * {
