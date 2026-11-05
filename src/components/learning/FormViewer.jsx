@@ -221,7 +221,7 @@ function continueToNextChapter() {
     <section className="training-form-screen" dir="rtl">
       <header className="training-form-heading">
         <h2>{form.title}</h2>
-        <p>מלאו את הפרטים בשדות המתאימים</p>
+        <p>מוזמנים להתנסות במילוי הטופס</p>
       </header>
 
       <div className="training-form-body">
@@ -335,7 +335,7 @@ function continueToNextChapter() {
                 </h2>
 
                 <p className="training-form-success-message">
-                  מילאתם את אישור המעבר בהצלחה
+                  עברתם את אישור המעבר בהצלחה
                   <br />
                   והוצאתם את הכלוא מהפלוגה
                 </p>

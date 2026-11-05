@@ -262,7 +262,7 @@
 .notes-popup {
   position: fixed;
   inset: 0;
-  width: min(47.25rem, calc(100vw - 3rem));
+  width: min(48.25rem, calc(100vw - 4rem));
   max-width: none;
   max-height: calc(100dvh - 3rem);
   margin: auto;
@@ -289,7 +289,7 @@
 }
 
 .notes-popup-title {
-  margin: 0 0 1.1rem;
+  margin: 0 0 0.6rem;
   color: #d44742;
   font-family: "Eden", inherit;
   font-size: 3rem;
@@ -300,8 +300,8 @@
 
 .notes-popup-back {
   position: absolute;
-  top: 1.4rem;
-  right: 1.2rem;
+  top: 1rem;
+  right: 0.9rem;
 
   display: grid;
   place-items: center;

@@ -31,6 +31,10 @@ body {
   src: url('../assets/fonts/ploni-bold-aaa.otf');
 }
 @font-face {
+  font-family: sign;
+  src: url('../assets/fonts/DL Fontboy.ttf');
+}
+@font-face {
   font-family: comix;
   src: url('../assets/fonts/COMIXNO2CLM_MEDIUM-WEBFONT.TTF');
 }
@@ -84,7 +88,7 @@ html {
 }
 
 ::selection {
-  color: rgb(245, 171, 165);
+  color: rgb(255, 255, 255);
     background: rgb(20, 64, 131);
 }
 
@@ -119,9 +123,8 @@ img {
 
     background: #a8c9f1bc;
 
-    color: #aa2727;
+    color: #4b1414;
 
-    font-family: "Ploni";
     font-size: 1.2rem;
 }
 

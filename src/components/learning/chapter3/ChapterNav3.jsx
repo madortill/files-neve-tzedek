@@ -8,12 +8,12 @@ import bahad13 from "../../../assets/images/bahad13.svg";
 
 import ChatOffice from "./chatOffice/ChatOffice.jsx";
 import FileAsking from "./fileAsking/FileAsking.jsx";
+import ChatTaking from "./chatTaking/ChatTaking.jsx";
 
 const STORAGE_KEY = "forms-course:chapter3";
 
 // chat1 - טקסט ראשון | chat2 - "איך נמלא?" | desk - חלונית יורדת + נייר זוהר | fileAsking - הטופס
-const STEPS = ["chat1", "chat2", "desk", "fileAsking"];
-
+const STEPS = ["chat1", "chat2", "desk", "fileAsking","chatTaking"];
 function readProgress() {
   try {
     const saved = JSON.parse(sessionStorage.getItem(STORAGE_KEY));
@@ -26,6 +26,7 @@ function readProgress() {
 
 export default function ChapterNav3({ onBack, onFinish }) {
   const [savedProgress] = useState(readProgress);
+  const [takingStage, setTakingStage] = useState(1);
 
   const [step, setStep] = useState(() =>
     STEPS.includes(savedProgress.step) ? savedProgress.step : STEPS[0]
@@ -60,20 +61,36 @@ export default function ChapterNav3({ onBack, onFinish }) {
     onFinish?.();
   }
 
-  function goBack() {
-    if (stepIndex === 0) {
-      onBack?.();
-      return;
+function goBack() {
+  if (step === "chatTaking" && takingStage > 1) {
+    setTakingStage((s) => s - 1);
+    return;
+  }
+
+  if (stepIndex === 0) {
+    onBack?.();
+    return;
+  }
+
+  setStep(STEPS[stepIndex - 1]);
+}
+ function goForward() {
+  if (step === "chatTaking") {
+    if (takingStage < 3) {
+      setTakingStage((s) => s + 1);
     }
-    setStep(STEPS[stepIndex - 1]);
+    return;
   }
 
-  function goForward() {
-    if (stepIndex < maxIndex) setStep(STEPS[stepIndex + 1]);
+  if (stepIndex < maxIndex) {
+    setStep(STEPS[stepIndex + 1]);
   }
-
+}
   const backDisabled = stepIndex === 0 && typeof onBack !== "function";
-  const forwardDisabled = stepIndex >= maxIndex;
+const forwardDisabled =
+  step === "chatTaking"
+    ? takingStage >= 3
+    : stepIndex >= maxIndex;
 
   function renderStep() {
     switch (step) {
@@ -86,6 +103,13 @@ export default function ChapterNav3({ onBack, onFinish }) {
         return <ChatOffice dialogueNumber={3} onNext={goNext} />;
       case "fileAsking":
         return <FileAsking onNext={goNext} />;
+case "chatTaking":
+  return (
+    <ChatTaking
+      stage={takingStage}
+      onComplete={goNext}
+    />
+  );
       default:
         return null;
     }

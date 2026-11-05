@@ -1,4 +1,4 @@
-.file-asking {
+.ask-form {
   position: relative;
   width: 100%;
   height: 100%;
@@ -7,25 +7,76 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
+  padding: 12px 0;
+  box-sizing: border-box;
   background: rgba(14, 15, 67, 0.32);
   overflow: hidden;
 }
 
-/* הנייר "גדל" מהמקום שבו הוא היה מונח על השולחן (בערך מרכז-תחתון) */
-.file-asking__img {
-  max-width: 92%;
-  max-height: 85%;
-  object-fit: contain;
+/* אזור הדף: תופס את כל הגובה שנשאר מעל הכפתור, ובו הדף מותאם בדיוק */
+.ask-form__stage {
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+  container-type: size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* הדף: שומר יחס של הטופס ותמיד נכנס כולו לאזור (לפי הרוחב או הגובה – הקטן מביניהם) */
+.ask-form__paper {
+  position: relative;
+  width: min(94cqw, 96cqh * (1834 / 2712));
+  aspect-ratio: 1834 / 2712;
+  flex: none;
   transform-origin: 50% 75%;
-  animation: file-asking-grow 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: ask-form-grow 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
-@keyframes file-asking-grow {
-  from { transform: translate(-8%, 30%) scale(0.18); opacity: 0.4; }
-  to   { transform: none; opacity: 1; }
+.ask-form__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  user-select: none;
 }
 
-.file-asking__continue {
+.ask-form__row {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  font-size: calc(var(--paper-h) * 0.0155);
+}
+
+.ask-form__cell {
+  position: absolute;
+  top: calc(var(--row-top) * 1%);
+  height: calc(var(--row-h) * 1%);
+  right: calc(var(--right) * 1%);
+  width: calc(var(--width) * 1%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  direction: rtl;
+
+  color: #0b2a7a;
+  font-family: comix, sans-serif;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+
+  animation: ask-form-write 600ms ease-out both;
+}
+
+/* שורות טקסט ארוכות – מתחילות מהימין */
+.ask-form__cell--start {
+  justify-content: flex-start;
+}
+
+.ask-form__continue {
+  flex: none;
   padding: 8px 28px;
   border: 0;
   border-radius: 999px;
@@ -35,6 +86,20 @@
   cursor: pointer;
 }
 
+@keyframes ask-form-grow {
+  from { transform: translate(-8%, 30%) scale(0.18); opacity: 0.4; }
+  to   { transform: none; opacity: 1; }
+}
+
+/* הכתב נחשף מימין לשמאל */
+@keyframes ask-form-write {
+  from { clip-path: inset(0 0 0 100%); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .file-asking__img { animation: none; }
+  .ask-form__paper,
+  .ask-form__cell {
+    animation: none;
+  }
 }
