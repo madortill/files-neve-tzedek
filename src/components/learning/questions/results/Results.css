@@ -1,0 +1,170 @@
+/* משלים את questions.css – משתמש באותם q-wrap / q-card / q-btn / q-chapter-tag */
+
+.r-stage {
+  background-size: cover;
+  background-position: center;
+}
+
+.r-card {
+  align-items: center;
+  overflow: hidden;
+  animation: q-pop 0.45s ease both;
+}
+
+.r-title {
+  position: relative;
+  z-index: 1;
+  height: auto;
+  padding: 2.6cqw 6cqw 0;
+}
+
+/* ---------- עיגול הציון: הירוק עולה מלמטה לפי האחוז ---------- */
+.r-gauge {
+  position: relative;
+  z-index: 1;
+  width: 15.5cqw;
+  height: 15.5cqw;
+  margin-top: 1.8cqw;
+  border-radius: 50%;
+  background: linear-gradient(to top, #96c98f var(--p), #c4c8c6 var(--p));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.r-gauge-text {
+  font-family: "lin-bold";
+  font-size: max(15px, 2.2cqw);
+  color: #1f1a1a;
+}
+
+.r-msg {
+  position: relative;
+  z-index: 1;
+  margin: 1.2cqw 0 0;
+  font-size: max(11px, 1.35cqw);
+  color: #222;
+}
+
+/* ---------- סטטיסטיקה ---------- */
+.r-stats {
+  position: relative;
+  z-index: 1;
+  margin-top: 1.4cqw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* ב-RTL: מיושר לימין */
+  gap: 0.5cqw;
+  width: 100%;
+  padding: 0 14cqw;
+  box-sizing: border-box;
+  font-size: max(11px, 1.45cqw);
+  color: #222;
+}
+.r-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.8cqw;
+  font-family: "lin-bold";
+}
+.r-ok  { color: #3fae5a; font-weight: 700; }
+.r-bad { color: #e0343b; font-weight: 700; }
+
+.r-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #1f4fd8;
+  text-decoration: underline;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+/* ---------- כפתורי פעולה ---------- */
+.r-actions {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  margin-bottom: 2.3cqw;
+  width: 100%;
+  padding: 0 11cqw;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+}
+.r-actions .q-btn { margin: 0; }
+
+/* ---------- פירוט השאלות ---------- */
+.r-details {
+  position: relative;
+  z-index: 1;
+  list-style: none;
+  margin: 1cqw 0 0;
+  padding: 0 8.4cqw;
+  box-sizing: border-box;
+  width: 100%;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1cqw;
+}
+.r-detail {
+  display: flex;
+  align-items: flex-start;
+  gap: 1cqw;
+  padding: 1cqw 1.4cqw;
+  border-radius: 0.8cqw;
+  background: #fff;
+  border-right: 0.5cqw solid #3fae5a;
+  font-size: max(11px, 1.35cqw);
+  color: #222;
+}
+.r-detail.bad { border-right-color: #e0343b; }
+.r-detail-q { font-family: "lin-bold"; }
+.r-detail-a { margin-top: 0.3cqw; }
+.r-close { margin-top: 1.4cqw; position: relative; z-index: 1; }
+
+/* ---------- קונפטי (רק בציון 100) ---------- */
+.r-confetti {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.r-confetti-piece {
+  position: absolute;
+  top: -4cqw;
+  border-radius: 0.15cqw;
+  opacity: 0;
+  animation-name: r-fall;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+}
+.r-confetti-piece.round { border-radius: 50%; }
+@keyframes r-fall {
+  0%   { opacity: 0; translate: 0 0; }
+  10%  { opacity: 1; }
+  100% { opacity: 1; translate: 0.8cqw 34cqw; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .r-confetti-piece { animation: none; opacity: 1; top: 40%; }
+}
+
+/* ---------- מובייל ---------- */
+@media (max-width: 640px) {
+  .r-title { padding: 18px 56px 0; font-size: 18px; }
+  .r-gauge { width: 120px; height: 120px; margin-top: 12px; }
+  .r-gauge-text { font-size: 20px; }
+  .r-msg { font-size: 13px; margin-top: 10px; }
+  .r-stats { padding: 0 24px; font-size: 14px; gap: 4px; margin-top: 12px; }
+  .r-actions { padding: 0 16px; margin: 16px 0; flex-shrink: 0; }
+  .r-details { padding: 0 16px; gap: 8px; }
+  .r-detail { font-size: 14px; padding: 8px 10px; gap: 8px; border-radius: 6px; }
+  .r-confetti-piece { width: 8px !important; height: 14px !important; }
+  .r-confetti-piece.round { height: 8px !important; }
+}
